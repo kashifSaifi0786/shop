@@ -1,23 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Form from "./components/form";
+import ShopsList from "./components/ShopsList";
+import { Routes, Route } from "react-router-dom";
+import { getData } from "./dummyData";
 
 function App() {
+  const [data, setData] = useState(getData());
+
+  const handleAdd = (shop) => {
+    const shops = [...data];
+    const id = shops.length + 1;
+    shops.push({ id, ...shop });
+    setData(shops);
+  };
+
+  const handleUpdate = (shop) => {};
+
+  const handleDelete = (id) => {
+    const shops = data.filter((shop) => shop.id !== id);
+    setData(shops);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route
+          path={"/shop/:id"}
+          element={
+            <Form
+              data={data}
+              handleAdd={handleAdd}
+              handleUpdate={handleUpdate}
+            />
+          }
+        />
+        <Route
+          path={"/"}
+          element={
+            <ShopsList
+              data={data}
+              handleAdd={handleAdd}
+              handleDelete={handleDelete}
+            />
+          }
+        />
+      </Routes>
     </div>
   );
 }
