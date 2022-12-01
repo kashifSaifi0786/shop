@@ -17,8 +17,8 @@ const Form = ({ data: shops, handleAdd, handleUpdate }) => {
   const [err, setErr] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
-  const shopId = parseInt(location.pathname.split("/")[2]);
-  const shop = shops.filter((sh) => sh.id === shopId);
+  const shopId = location.pathname.split("/")[2];
+  const shop = shops.filter((sh) => sh.id === parseInt(shopId));
 
   useEffect(() => {
     if (shopId && shopId !== "new") {
@@ -143,7 +143,7 @@ const Form = ({ data: shops, handleAdd, handleUpdate }) => {
         });
       } else {
         handleUpdate({
-          id: shopId,
+          id: parseInt(shopId),
           name,
           area,
           category,
