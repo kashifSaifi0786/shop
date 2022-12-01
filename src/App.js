@@ -14,7 +14,12 @@ function App() {
     setData(shops);
   };
 
-  const handleUpdate = (shop) => {};
+  const handleUpdate = (shop) => {
+    const shops = [...data];
+    const index = shops.findIndex((sh) => sh.id === shop.id);
+    shops[index] = { ...shop };
+    setData(shops);
+  };
 
   const handleDelete = (id) => {
     const shops = data.filter((shop) => shop.id !== id);
